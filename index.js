@@ -95,10 +95,15 @@ async function retriveinfo() {
             )
           : null,
         description: `<![CDATA[${item.description}]]>`,
-        guid: item.link,
+        guid: item.link
+          ? item.link.replace(
+              "cms.thepostmillennial.com",
+              "thepostmillennial.com"
+            )
+          : null,
         pubDate: item.pubDate,
         "content:encoded": `<![CDATA[${item["content:encoded"]}]]>`,
-        category: `<![CDATA[${item.category}]]>`,
+        category: `<![CDATA[${item.categories}]]>`,
         "dc:creator": item.creator,
         "dc:language": "en",
         "media:thumbnail": item["media:content"][0].$.url
@@ -131,10 +136,10 @@ async function retriveinfo() {
 }
 
 async function main() {
-  console.log(await retriveinfo());
+  // console.log(await retriveinfo());
   return retriveinfo();
 }
-main();
+// main();
 exports.handler = async (event, context, callback) => {
   const rss = main();
   return rss;
